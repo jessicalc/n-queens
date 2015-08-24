@@ -79,12 +79,33 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      // counter keeps track of Queens in a row.
+      // If counter grows larger than 1, returns true and turns rows red.
+      var counter = 0;
+      // row returns the array at rowIndex. e.g. [0, 0 ,0]
+      var row = this.get(rowIndex);
+      for (var i = 0; i < row.length; i++) {
+        if (row[i] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 1) {
+        return true;
+      }
+      return false; 
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
-      return false; // fixme
+      // rows returns the whole board as an array of rows. e.g. [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        // if this.HasRowConflict evaluates to true, return true.
+        if (this.hasRowConflictAt(i)) {
+          return true;
+        }
+      }
+      return false;
     },
 
 
@@ -94,11 +115,31 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      return false; // fixme
+      var counter = 0;
+
+      var rows = this.rows();
+
+      for (var i = 0; i < rows.length; i++) {
+        if (rows[i][colIndex] === 1) {
+          counter++;
+        }
+      }
+
+      if (counter > 1) {
+        return true;
+      }
+      return false; 
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      var rows = this.rows();
+      for (var i = 0; i < rows.length; i++) {
+        if (this.hasColConflictAt(i)) {
+          return true;
+        }
+      }
+
       return false; // fixme
     },
 
@@ -109,6 +150,17 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      var rows = this.rows();
+      var counter = 0;
+      for (var i = 0; i < rows.length - 1; i++) {
+        // loop starts at row[0];
+        if (rows[i + 1][i + 1] === 1) {
+          counter++;
+        }
+      }
+      if (counter > 0) {
+        return true;
+      }
       return false; // fixme
     },
 
