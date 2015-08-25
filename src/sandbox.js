@@ -11,3 +11,15 @@
 
 
 // at the end, replace all X with 0s
+
+var j = new Board({n : 4});
+
+j.set(0, [1, 0,0,0]);
+
+j.set(1, [0,0,0,0]);
+
+j.set(2, [0, 0, 1, 0]);
+
+j.rows();
+
+j.hasMajorDiagonalConflictAt(0);
