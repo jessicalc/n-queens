@@ -61,9 +61,8 @@ window.findNRooksSolution = function(n) {
   // debugger;
   var solution = new Board({n: n});
   var rows = solution.rows();
-  console.log(rows);
   var counter = 0;
-  var inner = function(rowIndex) {
+  var inner = function(board, rowIndex) {
     // debugger;
     if (counter === solution.n || rowIndex === rows.length) {
       console.log(solution.rows());
@@ -81,7 +80,7 @@ window.findNRooksSolution = function(n) {
         solution.togglePiece(rowIndex, colIndex);
         counter--;
       } else {
-        inner(rowIndex + 1);
+        inner(solution, rowIndex + 1);
       }
           // decrement the counter 
           // toggle it off.
@@ -90,8 +89,8 @@ window.findNRooksSolution = function(n) {
     }
 
   }
-  
-    inner(0);
+  inner(solution, 0);
+  // pass in the outputted board as an argument
 
   console.log(solution.rows());
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
