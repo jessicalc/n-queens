@@ -29,23 +29,53 @@ window.findNRooksSolution = function(n) {
   var solution = new Board({n: n});
   var rows = solution.rows();
   console.log(rows);
-
-  var inner = function(start) {
-    for (var i = start; i < rows.length; i++) {
-      for (var j = 0; j < rows.length; j++) {
+  var inner = function(rowIndex, colIndex) {
+    debugger;
+    var counter = 0;
+    for (var i = rowIndex; i < rows.length; i++) {
+      for (var j = colIndex; j < rows.length; j++) {
+        // if counter is equal to end, problem is solved.
+        if (counter === solution.n) {
+          console.log(solution.rows());
+          return;
+        }
         if (rows[i][j] === 0) {
-          rows[i][j] = 1;
+          // toggle  to the next piece over
+          solution.togglePiece(i, j);
+          counter++;
+          // check for conflict
+            // if true, toggle piece, decrease counter, check to see if we're at end of board.
           if (solution.hasAnyRooksConflicts()) {
-            rows[i][j] = 0;
+            solution.togglePiece(i, j); // turns the piece back to 0
+            counter--;
+            if (j >= rows.length - 1) {
+              j = 0;
+              if (solution._isInBounds(i + 1, j)) {
+                break;
+              }
+            }
+          // if no conflict...
           } else {
-            inner(i + 1);
-          }
+              // check to see if we are at last column.
+            if (j >= rows.length - 1) {
+              // if at last column, reset j
+              j = 0;
+              // check to see if we are in bounds on the next row.
+              if (solution._isInBounds(i + 1, j)) {
+                // if true, run operation on new values.
+                continue;
+              }
+            }
+            if (solution._isInBounds(i, j + 1)) {
+              continue;
+            }
+          } 
         } 
       }
     }
   }
 
-  inner(0);
+  inner(0, 0);
 
   console.log(solution.rows());
   console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
