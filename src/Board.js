@@ -188,6 +188,7 @@
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
       var rows = this.rows();
+      // TODO: fix our minor and major diagonal conflict functions
       // Column holds a consistant value so it doesn't keep getting reincrimented.
       var column = minorDiagonalColumnIndexAtFirstRow;
       var counter = 0;
